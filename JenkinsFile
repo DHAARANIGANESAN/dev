@@ -16,7 +16,7 @@ pipeline {
 stage('build to images') {
             steps {
                script{
-                  sh 'docker build -t demohub/simplewebapp:2 .'
+                  sh 'docker build -t dhaarani15/simplewebapp:2 .'
                }
     }
 }
