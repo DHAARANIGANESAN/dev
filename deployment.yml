@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy
+  labels:
+    apptype: web-backend  # Ensure this matches Service selector
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      apptype: web-backend  # Ensure this matches Service selector
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        apptype: web-backend  # Ensure this matches Service selector
+    spec:
+      containers:
+      - name: my-app
+        image: dhaarani15/simplewebapp:2
+        ports:
+        - containerPort: 7070
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    apptype: web-backend  # Make labels consistent
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 8080
+      port: 7070
+      nodePort: 30002
+  selector:
+    apptype: web-backend 
